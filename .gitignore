@@ -1,0 +1,10 @@
+﻿node_modules/
+data/db.json
+data/*.bak
+uploads/*
+!uploads/.gitkeep
+public/img/uploads/*
+!public/img/uploads/.gitkeep
+*.log
+.env
+.claude/

@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>관리자 - 비비프린피아</title>
+<style>
+:root{--pri:#1d4ed8;--line:#e5e7eb;--ink:#1f2937;--mute:#6b7280;--red:#e11d48}
+*{box-sizing:border-box;margin:0;padding:0}body{font-family:'Malgun Gothic',system-ui,sans-serif;font-size:14px;color:var(--ink);background:#f1f5f9;display:flex;min-height:100vh}
+body{word-break:keep-all;overflow-wrap:break-word}td{overflow-wrap:anywhere}.btn,button,.st{white-space:nowrap}
+a{color:inherit;text-decoration:none}button{font:inherit;cursor:pointer}
+input,select,textarea{font:inherit;border:1px solid #d1d5db;border-radius:6px;padding:7px 9px;width:100%;background:#fff}
+#side{width:220px;background:#0f172a;color:#cbd5e1;flex-shrink:0;padding:18px 0;position:sticky;top:0;height:100vh}
+#side h1{color:#fff;font-size:17px;padding:0 20px 18px}#side h1 small{display:block;color:#64748b;font-size:11px;font-weight:400}
+#side a{display:block;padding:11px 20px;cursor:pointer}#side a:hover{background:#1e293b}#side a.on{background:var(--pri);color:#fff}
+#main{flex:1;padding:24px 28px;min-width:0}h2{font-size:22px;margin-bottom:16px}
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px}
+.c{background:#fff;border-radius:12px;padding:18px;border:1px solid var(--line)}.c small{color:var(--mute)}.c b{display:block;font-size:24px;margin-top:4px}
+.panel{background:#fff;border:1px solid var(--line);border-radius:12px;padding:18px;margin-bottom:18px}.panel h3{margin-bottom:12px}
+.two{display:grid;grid-template-columns:2fr 1fr;gap:18px}
+table{width:100%;border-collapse:collapse}th{background:#f8fafc;text-align:left;padding:10px;border-bottom:1px solid var(--line);white-space:nowrap}td{padding:10px;border-bottom:1px solid var(--line);vertical-align:middle}
+.btn{display:inline-block;padding:7px 14px;border-radius:6px;border:1px solid var(--pri);background:var(--pri);color:#fff;font-weight:600}.btn.g{background:#fff;color:var(--ink);border-color:#d1d5db}.btn.r{background:var(--red);border-color:var(--red)}.btn.s{padding:4px 9px;font-size:12px}
+.bar{display:flex;gap:8px;margin-bottom:14px;align-items:center;flex-wrap:wrap}.bar input,.bar select{width:auto}
+.st{display:inline-block;padding:2px 9px;border-radius:12px;font-size:12px;font-weight:700;background:#e0e7ff;color:#3730a3}.st.c{background:#fee2e2;color:#991b1b}.st.d{background:#dcfce7;color:#166534}.st.w{background:#fef3c7;color:#92400e}
+.chart{display:flex;align-items:flex-end;gap:12px;height:160px;padding-top:10px}.chart div{flex:1;text-align:center;font-size:11px;color:var(--mute)}.chart i{display:block;background:linear-gradient(#3b82f6,#1d4ed8);border-radius:5px 5px 0 0;min-height:3px;margin-bottom:4px}
+#modal{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;align-items:flex-start;justify-content:center;padding:40px 16px;overflow:auto;z-index:20}#modal.on{display:flex}
+#modal .box{background:#fff;border-radius:14px;padding:24px;width:680px;max-width:100%}#modal h3{margin-bottom:14px}
+.f{margin-bottom:10px}.f label{display:block;font-weight:700;font-size:12px;margin-bottom:3px}.g2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+#login{position:fixed;inset:0;background:#0f172a;display:flex;align-items:center;justify-content:center;z-index:50}#login .box{background:#fff;padding:32px;border-radius:14px;width:340px}#login h2{text-align:center}
+#toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#111827;color:#fff;padding:10px 20px;border-radius:24px;opacity:0;transition:.3s;z-index:99}#toast.on{opacity:1}
+.hint{color:var(--mute);font-size:12px;margin-top:2px}.mrow.trow{display:flex;gap:6px;align-items:center;padding:6px 8px;border:1px solid var(--line);border-radius:8px;margin-bottom:6px;background:#f8fafc}.blk{border:1px solid var(--line);border-radius:8px;padding:10px;margin-bottom:8px;background:#fff}.blkh{display:flex;justify-content:space-between;align-items:center}.btn[disabled]{opacity:.4;cursor:default}
+@media(max-width:900px){body{flex-direction:column}#side{width:100%;height:auto;position:static;display:flex;overflow:auto;padding:0}#side h1{display:none}.cards{grid-template-columns:repeat(2,1fr)}.two{grid-template-columns:1fr}#main{padding:14px;overflow-x:auto}}
+</style>
+</head>
+<body>
+<div id="login"><div class="box"><h2>🔐 관리자 로그인</h2><br>
+<div class="f"><label>아이디</label><input id="aid" value="admin"></div><div class="f"><label>비밀번호</label><input id="apw" type="password" onkeydown="if(event.key==='Enter')doLogin()"></div>
+<button class="btn" style="width:100%;padding:11px" onclick="doLogin()">로그인</button><p class="hint" style="margin-top:10px">기본 계정은 서버 시작 시 콘솔에 표시됩니다.</p></div></div>
+<nav id="side"><h1>🦷 쇼핑몰 관리자<small>치과 인쇄물 쇼핑몰</small></h1>
+<a data-p="dash">📊 대시보드</a><a data-p="orders">📦 주문관리</a><a data-p="products">🛍️ 상품관리</a><a data-p="categories">🗂️ 메뉴(분류)관리</a><a data-p="quick">⭐ 주요서비스</a><a data-p="templates">🎨 디자인템플릿</a><a data-p="users">👥 회원관리</a><a data-p="inquiry">💬 1:1 문의</a><a data-p="proof">🖍️ 시안교정</a><a data-p="notice">📢 공지사항</a><a data-p="faq">❓ FAQ</a><a data-p="banners">🖼️ 메인롤링배너</a><a data-p="settings">⚙️ 기본설정</a>
+<a href="/" target="_blank">🏠 쇼핑몰 보기</a><a onclick="logout()">로그아웃</a></nav>
+<main id="main"></main>
+<div id="modal"><div class="box" id="mbox"></div></div><div id="toast"></div>
+<script src="/js/tplrender.js"></script>
+<script src="admin.js"></script>
+</body>
+</html>
