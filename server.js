@@ -11,8 +11,9 @@ const ADMIN_ID = process.env.ADMIN_ID || 'admin';
 const ADMIN_PW = process.env.ADMIN_PW || 'admin1234';
 const ROOT = __dirname;
 const PUBLIC = path.join(ROOT, 'public');
-const DATA_DIR = path.join(ROOT, 'data');
-const UPLOADS = path.join(ROOT, 'uploads');
+const STORAGE = process.env.STORAGE_DIR || ROOT;   // 배포 시 영구 디스크 경로 지정
+const DATA_DIR = path.join(STORAGE, 'data');
+const UPLOADS = path.join(STORAGE, 'uploads');
 const DB_FILE = path.join(DATA_DIR, 'db.json');
 fs.mkdirSync(DATA_DIR, { recursive: true });
 fs.mkdirSync(UPLOADS, { recursive: true });
@@ -596,4 +597,4 @@ const server = http.createServer(async (req, res) => {
     console.error(e); send(res, 500, { error: '서버 오류가 발생했습니다.' });
   }
 });
-server.listen(PORT, () => { console.log(findSoffice() ? '문서 변환 엔진: LibreOffice 사용 가능' : '문서 변환 엔진: LibreOffice 미설치 (Word/Excel/PPT↔PDF 변환 비활성)'); console.log(`쇼핑몰: http://localhost:${PORT}\n관리자: http://localhost:${PORT}/admin/  (ID: ${ADMIN_ID} / PW: ${ADMIN_PW})`); });
+server.listen(PORT, () => { console.log(findSoffice() ? '문서 변환 엔진: LibreOffice 사용 가능' : '문서 변환 엔진: LibreOffice 미설치 (Word/Excel/PPT↔PDF 변환 비활성)'); console.log(`쇼핑몰: http://localhost:${PORT}\n관리자: http://localhost:${PORT}/admin/  (ID: ${ADMIN_ID} / PW: ${process.env.ADMIN_PW ? '환경변수로 설정됨' : ADMIN_PW + ' ← 기본값입니다. 공개 전 ADMIN_PW를 꼭 바꾸세요'})`); });

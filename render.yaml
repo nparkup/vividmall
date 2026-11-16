@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: vividmall
+    runtime: docker
+    plan: free
+    healthCheckPath: /
+    envVars:
+      - key: ADMIN_ID
+        value: admin
+      - key: ADMIN_PW
+        sync: false   # 배포 화면에서 직접 입력 (코드에 올리지 않음)
