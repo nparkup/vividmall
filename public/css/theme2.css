@@ -44,7 +44,9 @@ body:not(.ed-open)::before{content:"";position:fixed;inset:0;z-index:-1;pointer-
 .gnb .gi>a.bg-tool{background:linear-gradient(135deg,#ff7a45,#ff2d6f);box-shadow:0 10px 22px rgba(255,45,111,.28)}
 .gi .mega{border:1px solid rgba(79,70,229,.1);border-radius:30px;box-shadow:0 40px 80px rgba(49,46,129,.22)}
 /* 메가메뉴: 내용 폭에 맞게 줄이고(흰 여백 제거), 메뉴 영역 왼쪽 끝에 맞춰 열기 */
-.gi .mega{left:max(16px,calc((100% - 1168px)/2));right:auto;transform:none;width:max-content;max-width:min(1168px,calc(100% - 32px))}
+/* 하위메뉴는 해당 메뉴 글자 바로 아래에 열림 (화면 밖으로 넘치면 app.js가 왼쪽으로 당김) */
+.gnb .gi{position:relative}
+.gi .mega{left:0;right:auto;transform:none;top:calc(100% + 2px);width:max-content;max-width:min(1168px,calc(100vw - 32px))}
 .mega-in{display:flex;flex-wrap:wrap;gap:26px 30px;padding:28px 34px 30px;max-width:none;margin:0}
 .mega .mcol{min-width:110px}
 .mega .mcol a.mh::after{background:var(--grad)}

@@ -58,6 +58,15 @@ function renderChrome() {
   <div class="mega"><div class="mega-in">${t.cats.map(c => `<div class="mcol"><a class="mh" href="${listLink(c.id)}">${esc(c.name)}</a>${c.subs.map(s => `<a href="${listLink(c.id, s)}">${esc(s)}</a>`).join('')}</div>`).join('')}</div></div></div>`).join('')}
   <div class="gi"><a href="#/board/notice">고객센터</a><div class="sub"><a href="#/board/notice">공지사항</a><a href="#/board/faq">FAQ</a><a href="#/board/inquiry">1:1 문의</a><a href="#/templates">디자인템플릿</a><a href="#/board/proof">시안교정</a></div></div>
   <div class="gi"><a class="bg-tool ${cur.startsWith('#/tools') ? 'on' : ''}" href="#/tools">무료파일변환</a><div class="sub">${(window.FileTools ? FileTools.TOOLS : []).map(t => `<a href="#/tools/${t.id}">${esc(t.name)}</a>`).join('')}</div></div></div></nav>`;
+  // 메가메뉴가 화면 오른쪽 밖으로 넘치면 넘친 만큼 왼쪽으로 당겨서 보여줌
+  document.querySelectorAll('#header .gnb .gi').forEach(g => {
+    const m = g.querySelector('.mega'); if (!m) return;
+    g.addEventListener('mouseenter', () => {
+      m.style.left = '';
+      const over = m.getBoundingClientRect().right - (document.documentElement.clientWidth - 16);
+      if (over > 0) m.style.left = -over + 'px';
+    });
+  });
   $('#footer').innerHTML = `<div class="wrap"><div class="fl"><a href="#/board/notice">공지사항</a><a href="#/board/faq">FAQ</a><a href="#/board/inquiry">1:1문의</a><a href="#/lookup">주문조회</a><a href="#/tools">무료파일변환</a><a href="/admin/">관리자</a></div>
   <div class="cols"><div><b>${esc(s.company)}</b><span class="bar"> | </span>대표: ${esc(s.ceo)}<span class="bar"> | </span>사업자등록번호: ${esc(s.bizNo)}<br>주소: ${esc(s.address)}<br>대표번호: ${esc(s.phone)}<span class="bar"> | </span>e-mail: ${esc(s.email)}${s.fax ? `<span class="bar"> | </span>FAX: ${esc(s.fax)}` : ''}</div>
   <div><b>고객센터 운영시간</b><br>${esc(s.hours)}</div><div><b>무통장 입금계좌</b><br>${esc(s.bank)}</div></div>
