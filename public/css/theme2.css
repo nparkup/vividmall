@@ -110,13 +110,11 @@ body:not(.ed-open) input:focus,body:not(.ed-open) select:focus,body:not(.ed-open
   .search{display:flex;order:3;flex:1 1 100%;max-width:none}
   .search input{min-width:0;flex:1}
   .hd-links{display:none}   /* 모바일에서는 상단 띠로 이동 */
-  #topbar .tb-m{display:inline;order:-1}   /* 바로가기를 맨 앞에 */
-  #topbar .tb-cart{order:-1}
-  #topbar .tb-admin{display:none}   /* 모바일 상단 띠에서는 관리자 메뉴 숨김 */
+  #topbar .tb-m{display:inline}   /* 모바일 상단 띠: 로그인 · 회원가입 · 비회원 주문조회 · 문의하기 · 장바구니 */
   #topbar .wrap{flex-direction:row!important;flex-wrap:nowrap!important;overflow-x:auto;white-space:nowrap;gap:0!important;scrollbar-width:none;-webkit-overflow-scrolling:touch}
   #topbar .wrap::-webkit-scrollbar{display:none}
   #topbar .wrap>span:last-child{white-space:nowrap!important;display:flex;align-items:center}
-  #topbar a{margin:0 16px 0 0;padding:9px 0}
+  #topbar a{margin:0 12px 0 0!important;padding:9px 0;font-size:12px}
   #topbar .tb-cart{color:#fff;font-weight:600}
   .gnb .wrap{overflow-x:auto;flex-wrap:nowrap;gap:6px;padding:4px 16px 12px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
   .gnb .wrap::-webkit-scrollbar{display:none}
