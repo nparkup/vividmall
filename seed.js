@@ -147,10 +147,10 @@ function seed() {
   const now = new Date().toISOString();
   return {
     settings: {
-      shopName: '비비프린피아',
+      shopName: '비비디그라운드몰',
       phone: '0507-1309-5594', fax: '', email: 'business@vividground.co.kr',
       hours: '평일 09:30 ~ 18:30 (점심 12:30 ~ 13:30) / 주말·공휴일 휴무',
-      bank: '○○은행 000-000-000000 (예금주: 비비프린피아)',
+      bank: '○○은행 000-000-000000 (예금주: 비비디그라운드몰)',
       company: '비비디그라운드(Vivi:D ground)', ceo: '김지선', bizNo: '349-39-01700',
       address: '서울특별시 성동구 아차산로 107, 4층 402호 (성수동2가)',
       shipFee: 3000, freeShipOver: 50000, pointRate: 1, signupPoints: 3000,
