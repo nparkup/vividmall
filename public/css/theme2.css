@@ -47,8 +47,8 @@ body:not(.ed-open)::before{content:"";position:fixed;inset:0;z-index:-1;pointer-
 /* 하위메뉴는 해당 메뉴 글자 바로 아래에 열림 (화면 밖으로 넘치면 app.js가 왼쪽으로 당김) */
 .gnb .gi{position:relative}
 .gi .mega{left:0;right:auto;transform:none;top:calc(100% + 2px);width:max-content;max-width:min(1168px,calc(100vw - 32px))}
-.mega-in{display:flex;flex-wrap:wrap;gap:26px 30px;padding:28px 34px 30px;max-width:none;margin:0}
-.mega .mcol{min-width:110px}
+.mega-in{display:flex;flex-wrap:wrap;gap:26px 18px;padding:28px 26px 30px;max-width:none;margin:0}
+.mega .mcol{min-width:96px}
 .mega .mcol a.mh::after{background:var(--grad)}
 
 /* ---------- 버튼 (필 형태) ---------- */
