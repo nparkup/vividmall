@@ -61,7 +61,7 @@ body:not(.ed-open) input:focus,body:not(.ed-open) select:focus,body:not(.ed-open
 /* ---------- 섹션 제목 ---------- */
 .sec{margin-top:78px}
 .sec h2{font-size:36px;letter-spacing:-.05em;margin-bottom:28px}
-.sec h2 .eyebrow{display:inline-block;font-size:11px;letter-spacing:.14em;color:var(--pri);background:#fff;border:1px solid #e0e3ff;padding:5px 12px;border-radius:999px;margin-bottom:12px}
+.sec h2 .eyebrow{display:table;font-size:11px;letter-spacing:.14em;color:var(--pri);background:#fff;border:1px solid #e0e3ff;padding:5px 12px;border-radius:999px;margin-bottom:12px}
 .sec h2 a{background:#fff;color:var(--pri);box-shadow:inset 0 0 0 1.5px #d9dcfb}.sec h2 a:hover{background:var(--grad);color:#fff;box-shadow:none}
 .tabs button{background:#fff;box-shadow:inset 0 0 0 1.5px #e6e8f7}.tabs button:hover{background:var(--pri-l)}.tabs button.on{background:var(--ink);color:#fff;box-shadow:none}
 
@@ -88,8 +88,51 @@ body:not(.ed-open) input:focus,body:not(.ed-open) select:focus,body:not(.ed-open
 .side a:hover{background:#fff}.side a.on,.side a.toph.on,.side a.subl.on{background:#fff;color:var(--pri);box-shadow:0 6px 16px rgba(79,70,229,.1)}
 .sortbar select{background:#fff}
 
-@media (max-width:760px){
-  .hero{height:300px;border-radius:30px}.slide h2{font-size:32px}.slide p{font-size:15px}
-  .sec h2{font-size:28px}.pagehead h1{font-size:28px}
-  .iconsec .icons{grid-template-columns:repeat(auto-fill,minmax(104px,1fr))}
+/* ---------- 모바일 / 태블릿 ---------- */
+@media (max-width:900px){
+  /* 헤더: 로고 → 검색 → 바로가기 → 메뉴(가로 스크롤) 순서로 쌓고, 겹침 방지 */
+  #header{position:relative}
+  .hd-main{height:auto;flex-wrap:wrap;gap:10px 12px;padding:12px 16px 6px}
+  .logo{font-size:24px}
+  .search{display:flex;order:3;flex:1 1 100%;max-width:none}
+  .search input{min-width:0;flex:1}
+  .hd-links{margin-left:auto;gap:2px;flex-wrap:nowrap;white-space:nowrap}
+  .hd-links a{padding:7px 10px;font-size:13px}
+  .gnb .wrap{overflow-x:auto;flex-wrap:nowrap;gap:6px;padding:4px 16px 12px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .gnb .wrap::-webkit-scrollbar{display:none}
+  .gnb .gi{flex:0 0 auto}
+  .gnb a,.gnb .gi>a{white-space:nowrap;padding:8px 15px;font-size:13.5px;margin-right:0!important;margin-left:0!important}
+  .gnb .gi>a.bg-tool{margin-left:0}
+  .hero{height:260px;border-radius:30px}
+  .sec{margin-top:56px}.sec h2{font-size:26px}.pagehead h1{font-size:28px}
+  /* 상품 목록: 세로로 긴 분류 메뉴를 가로 스크롤 칩으로 */
+  .layout{gap:14px;margin-top:8px}
+  .side{display:flex;flex-wrap:nowrap;gap:8px;overflow-x:auto;padding:2px 2px 10px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .side::-webkit-scrollbar{display:none}
+  .side h3{display:none}
+  .side a,.side a.toph,.side a.catl,.side a.subl{flex:0 0 auto;white-space:nowrap;margin:0;padding:8px 15px;font-size:13px;font-weight:700;color:var(--text);background:#fff;border-radius:999px;box-shadow:inset 0 0 0 1.5px #e6e8f7}
+  .side a.subl{color:var(--mute);font-weight:600}
+  .side a.on,.side a.toph.on,.side a.subl.on{background:var(--ink);color:#fff;box-shadow:none}
+}
+@media (max-width:700px){
+  #topbar .wrap{flex-direction:row;flex-wrap:wrap;gap:2px 0;padding-top:6px;padding-bottom:6px}
+  #topbar .wrap>span:first-child{display:none}
+  #topbar a{margin:0 14px 0 0}
+  .hero{height:250px;border-radius:26px;margin-top:10px}
+  /* 이미지 배너: 전체를 줄여 넣지 않고, 문구가 있는 왼쪽을 크게 보여줌 */
+  .slide.imgslide{background-size:auto 100%,cover!important;background-position:left center,center!important}
+  .slide h2{font-size:26px}.slide p{font-size:14px}
+  .dots{bottom:9px}.dots i{width:7px;height:7px}.dots i.on{width:22px}
+  .iconsec{margin-top:28px}
+  .iconsec .icons{grid-template-columns:repeat(3,1fr);gap:10px}
+  .icons a{border-radius:22px;padding:16px 4px 12px;font-size:12px}.icons a span{width:48px;height:48px;font-size:24px;border-radius:17px}
+  .grid,.grid[style]{gap:12px!important}
+  .card{border-radius:24px}.thumb{margin:8px 8px 0;border-radius:18px}
+  .card .info{padding:12px 14px 16px}.card .nm{font-size:14px}.card .sp{font-size:11px;min-height:30px}
+  .price b{font-size:18px}.price .dc{font-size:13px}.price s{display:none}
+  .badge{top:10px;left:10px;padding:4px 10px;font-size:10px}.dcbar{right:8px;bottom:8px;font-size:11px;padding:3px 9px}
+  .quick3{gap:14px;margin-top:44px}.box{border-radius:26px;padding:22px}
+  #footer{margin-top:70px;border-radius:34px 34px 0 0}#footer .cols{gap:20px;flex-direction:column}#footer .fl{gap:14px;flex-wrap:wrap}
+  .pagehead h1{font-size:24px}
+  .tgrid{gap:12px}
 }
