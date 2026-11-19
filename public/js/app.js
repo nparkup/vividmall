@@ -46,7 +46,7 @@ function renderChrome() {
   const s = S.shop.settings, u = S.user;
   $('#topbar').innerHTML = `<div class="wrap"><span>${s.notice ? `📢 ${esc(s.notice)}` : ''}</span><span>${u
     ? `<b>${esc(u.name)}</b>님 (${u.points.toLocaleString()}P) <a href="#/my">마이페이지</a><a href="#" onclick="logout();return false">로그아웃</a>`
-    : `<a href="#/login">로그인</a><a href="#/signup">회원가입</a><a href="#/lookup">비회원 주문조회</a>`}<a href="/admin/">관리자</a><a class="tb-m" href="#/templates">디자인템플릿</a><a class="tb-m" href="#/board/inquiry">문의하기</a><a class="tb-m tb-cart" href="#/cart">장바구니(${cart.length})</a></span></div>`;
+    : `<a href="#/login">로그인</a><a href="#/signup">회원가입</a><a href="#/lookup">비회원 주문조회</a>`}<a class="tb-admin" href="/admin/">관리자</a><a class="tb-m" href="#/templates">디자인템플릿</a><a class="tb-m" href="#/board/inquiry">문의하기</a><a class="tb-m tb-cart" href="#/cart">장바구니(${cart.length})</a></span></div>`;
   const cur = location.hash.split('?')[0];
   const qs = new URLSearchParams(location.hash.split('?')[1] || ''), catQ = qs.get('cat');
   $('#header').innerHTML = `<div class="wrap hd-main"><a class="logo" href="#/">${esc(s.shopName)}<small>치과 인쇄물 전문</small></a>

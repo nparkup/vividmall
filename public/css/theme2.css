@@ -106,6 +106,7 @@ body:not(.ed-open) input:focus,body:not(.ed-open) select:focus,body:not(.ed-open
   .hd-links{display:none}   /* 모바일에서는 상단 띠로 이동 */
   #topbar .tb-m{display:inline;order:-1}   /* 바로가기를 맨 앞에 */
   #topbar .tb-cart{order:-1}
+  #topbar .tb-admin{display:none}   /* 모바일 상단 띠에서는 관리자 메뉴 숨김 */
   #topbar .wrap{flex-direction:row!important;flex-wrap:nowrap!important;overflow-x:auto;white-space:nowrap;gap:0!important;scrollbar-width:none;-webkit-overflow-scrolling:touch}
   #topbar .wrap::-webkit-scrollbar{display:none}
   #topbar .wrap>span:last-child{white-space:nowrap!important;display:flex;align-items:center}
