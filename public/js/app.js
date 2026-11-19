@@ -79,12 +79,56 @@ pages.home = async () => {
   const [notice, tpls] = await Promise.all([api('/api/posts/notice'), api('/api/templates')]);
   const ban = S.shop.banners;
   
+  // 메인 롤링배너: 자동 넘김 + 화살표/점 클릭 + 마우스 드래그 + 터치 스와이프
   setTimeout(() => {
-    const sl = document.querySelectorAll('.slide'), dots = document.querySelectorAll('.dots i'); let i = 0;
-    const go = n => { i = n; sl.forEach((s, k) => s.classList.toggle('on', k === i)); dots.forEach((d, k) => d.classList.toggle('on', k === i)); };
-    dots.forEach((d, k) => d.onclick = () => go(k)); clearInterval(window._hero); if (sl.length > 1) window._hero = setInterval(() => go((i + 1) % sl.length), 4500);
+    clearInterval(window._hero);
+    const hero = document.querySelector('.hero'); if (!hero) return;
+    const sl = [...hero.querySelectorAll('.slide')], dots = [...hero.querySelectorAll('.dots i')], n = sl.length;
+    let i = 0, drag = null, suppress = false;
+    const pos = (k, dx) => {   // 현재 슬라이드는 0, 다음은 +1, 이전은 -1 (드래그 방향 쪽 이웃을 우선 배치)
+      if (k === i) return 0;
+      const nx = (i + 1) % n, pv = (i - 1 + n) % n;
+      if (dx > 0 && k === pv) return -1;
+      if (dx <= 0 && k === nx) return 1;
+      return k === nx ? 1 : k === pv ? -1 : 2;
+    };
+    const place = (dx = 0, anim = true) => {
+      sl.forEach((s, k) => { s.style.transition = anim ? '' : 'none'; s.style.transform = `translateX(calc(${pos(k, dx) * 100}% + ${dx}px))`; s.classList.toggle('on', k === i); });
+      dots.forEach((d, k) => d.classList.toggle('on', k === i));
+    };
+    const play = () => { clearInterval(window._hero); if (n > 1) window._hero = setInterval(() => go(i + 1), 4500); };
+    const go = k => { i = ((k % n) + n) % n; place(); play(); };
+    place(0, false); play();
+    if (n < 2) return;
+    dots.forEach((d, k) => { d.onclick = () => go(k); });
+    hero.querySelector('.hero-nav.prev')?.addEventListener('click', () => go(i - 1));
+    hero.querySelector('.hero-nav.next')?.addEventListener('click', () => go(i + 1));
+    hero.addEventListener('mouseenter', () => clearInterval(window._hero));
+    hero.addEventListener('mouseleave', () => { if (!drag) play(); });
+    hero.addEventListener('pointerdown', e => {
+      if ((e.pointerType === 'mouse' && e.button !== 0) || e.target.closest('.hero-nav, .dots')) return;
+      drag = { x: e.clientX, t: Date.now(), moved: false, id: e.pointerId };
+    });
+    hero.addEventListener('pointermove', e => {
+      if (!drag) return;
+      const dx = e.clientX - drag.x;
+      if (!drag.moved) { if (Math.abs(dx) < 8) return; drag.moved = true; clearInterval(window._hero); hero.classList.add('dragging'); try { hero.setPointerCapture(drag.id); } catch { /* 무시 */ } }
+      place(dx, false);
+    });
+    const end = e => {
+      if (!drag) return;
+      const d = drag; drag = null; hero.classList.remove('dragging');
+      if (!d.moved) return;
+      suppress = true; setTimeout(() => { suppress = false; }, 0);   // 드래그 직후 링크가 눌리지 않게
+      const dx = e.clientX - d.x, w = hero.clientWidth, fast = Date.now() - d.t < 280 && Math.abs(dx) > 30;
+      if (e.type !== 'pointercancel' && (Math.abs(dx) > Math.max(60, w * 0.15) || fast)) go(i + (dx < 0 ? 1 : -1)); else { place(); play(); }
+    };
+    hero.addEventListener('pointerup', end); hero.addEventListener('pointercancel', end);
+    hero.addEventListener('click', e => { if (suppress) { e.preventDefault(); e.stopPropagation(); } }, true);
+    hero.addEventListener('dragstart', e => e.preventDefault());
   });
   return `<section class="hero"><div class="hero-in">${ban.map((b, i) => b.img ? `<div class="slide imgslide ${i ? '' : 'on'}" style="background:url('${esc(b.img)}') center/contain no-repeat,linear-gradient(120deg,${esc(b.color)},${esc(b.color2)})"><a class="fill" href="${esc(b.link)}" aria-label="${esc(b.title)}"></a></div>` : `<div class="slide ${i ? '' : 'on'}" style="background:linear-gradient(120deg,${esc(b.color)},${esc(b.color2)})"><div class="wrap"><h2>${esc(b.title)}</h2><p>${esc(b.sub)}</p><a class="btn" href="${esc(b.link)}">상품 보러가기 →</a></div></div>`).join('')}</div>
+  ${ban.length > 1 ? '<button class="hero-nav prev" aria-label="이전 배너">‹</button><button class="hero-nav next" aria-label="다음 배너">›</button>' : ''}
   <div class="dots">${ban.map((_, i) => `<i class="${i ? '' : 'on'}"></i>`).join('')}</div></section>
   <div class="wrap"><div class="iconsec"><div class="icons">${(S.shop.quickMenus || []).map(c => `<a href="${esc(c.link)}" style="--c:${esc(c.bg)}"><span>${esc(c.icon || '📦')}</span>${esc(c.name)}</a>`).join('')}</div></div>
   <section class="sec"><h2><span><em class="eyebrow">HOT PICKS</em>치과 히트상품</span> <a href="#/list">전체보기 →</a></h2><div class="grid">${hit.slice(0, 8).map(card).join('')}</div></section>

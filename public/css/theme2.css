@@ -62,6 +62,17 @@ body:not(.ed-open) input:focus,body:not(.ed-open) select:focus,body:not(.ed-open
 .slide.imgslide .fill{border-radius:40px}
 .dots{bottom:24px}.dots i.on{width:34px}
 
+/* 롤링배너: 좌우로 밀리는 슬라이드 + 화살표 + 드래그/스와이프 */
+.hero{touch-action:pan-y;-webkit-user-select:none;user-select:none;cursor:grab}
+.hero.dragging{cursor:grabbing}
+.hero .slide{opacity:1;transition:transform .55s var(--ease);will-change:transform}
+.hero a{-webkit-user-drag:none}
+.hero-nav{position:absolute;top:50%;transform:translateY(-50%);z-index:6;width:48px;height:48px;border-radius:50%;border:0;padding:0 0 4px;background:rgba(255,255,255,.22);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);color:#fff;font-size:30px;line-height:1;cursor:pointer;opacity:0;transition:opacity .25s,background .2s,transform .2s;box-shadow:0 8px 20px rgba(0,0,0,.18)}
+.hero-nav.prev{left:18px}.hero-nav.next{right:18px}
+.hero:hover .hero-nav{opacity:1}.hero-nav:hover{background:rgba(255,255,255,.42);transform:translateY(-50%) scale(1.08)}
+.hero .dots{z-index:6}
+@media (hover:none){.hero-nav{display:none}}
+
 /* ---------- 주요서비스(벤토 타일) ---------- */
 .iconsec{margin:44px 0 6px}
 .iconsec .icons{gap:8px 6px;grid-template-columns:repeat(10,1fr)}
