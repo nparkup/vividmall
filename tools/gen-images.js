@@ -299,13 +299,15 @@ const BOUT = path.join(__dirname, '..', 'public', 'img', 'banners');
 fs.mkdirSync(BOUT, { recursive: true });
 const DEFS = render('', BG.sky).match(/<defs>[\s\S]*<\/defs>/)[0];
 const place = (inner, x, y, s) => G(inner, `transform="translate(${x} ${y}) scale(${s})"`);
-const banner = ({ tag, title1, title2, sub, cta, ctaColor, mock }) => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 300">${DEFS}
-<circle cx="820" cy="150" r="200" fill="#fff" opacity=".10"/><circle cx="1090" cy="30" r="110" fill="#fff" opacity=".08"/>
-<rect x="30" y="40" width="${tag.length * 17 + 30}" height="30" rx="15" fill="#fff" opacity=".24"/>${T(45, 61, 16, '#fff', tag, 'font-weight="700"')}
-${T(30, 122, 40, '#fff', title1, 'font-weight="800"')}${T(30, 170, 40, '#fff', title2, 'font-weight="800"')}
-${T(30, 206, 16, '#fff', sub, 'opacity=".95"')}
-<rect x="30" y="228" width="220" height="42" rx="21" fill="#fff"/>${T(140, 255, 16, ctaColor, cta, 'text-anchor="middle" font-weight="800"')}
-${place(mock, -61, 34, .74)}</svg>`;
+// 1200x400 (히어로 비율에 맞춤). 좌우 바깥 여백 약 96px: 글자는 x=96부터, 이미지는 x≈1104까지만 배치
+const PADX = 96;
+const banner = ({ tag, title1, title2, sub, cta, ctaColor, mock }) => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400">${DEFS}
+<circle cx="830" cy="205" r="185" fill="#fff" opacity=".10"/><circle cx="1110" cy="60" r="90" fill="#fff" opacity=".08"/>
+<rect x="${PADX}" y="92" width="${tag.length * 17 + 30}" height="32" rx="16" fill="#fff" opacity=".24"/>${T(PADX + 15, 114, 16, '#fff', tag, 'font-weight="700"')}
+${T(PADX, 186, 44, '#fff', title1, 'font-weight="700"')}${T(PADX, 240, 44, '#fff', title2, 'font-weight="700"')}
+${T(PADX, 280, 17, '#fff', sub, 'opacity=".95"')}
+<rect x="${PADX}" y="306" width="224" height="46" rx="23" fill="#fff"/>${T(PADX + 112, 335, 16, ctaColor, cta, 'text-anchor="middle" font-weight="700"')}
+${G(place(mock, -61, 34, .74), 'transform="translate(60 78) scale(.87)"')}</svg>`;
 const banners = {
   'banner-dental': banner({
     tag: '치과인쇄', title1: '치과 인쇄물,', title2: '한 곳에서 끝내세요', sub: '진료차트 · 명함 · 약포지 · 쇼핑백 · 배너 맞춤제작', cta: '치과인쇄 보러가기 →', ctaColor: '#1d4ed8',
@@ -318,7 +320,7 @@ const banners = {
   'banner-sale': banner({
     tag: '특가 이벤트', title1: '최대 31% 할인', title2: '치과 인쇄물 특가전', sub: '진료차트 · 접수증 · 레터지 · 전단지 기획전', cta: '상품 보러가기 →', ctaColor: '#ea580c',
     mock: place(chart('#475569', false), 860, -20, .66) + place(slip('#0d9488'), 1100, 20, .6) + place(letter(), 1330, -10, .56)
-      + `<circle cx="1690" cy="70" r="62" fill="#e11d48" ${SH}/>` + T(1690, 70, 34, '#fff', '31%', 'text-anchor="middle" font-weight="800"') + T(1690, 98, 20, '#fff', 'OFF', 'text-anchor="middle" font-weight="700"'),
+      + `<circle cx="1545" cy="70" r="62" fill="#e11d48" ${SH}/>` + T(1545, 70, 34, '#fff', '31%', 'text-anchor="middle" font-weight="800"') + T(1545, 98, 20, '#fff', 'OFF', 'text-anchor="middle" font-weight="700"'),
   }),
   'banner-alu': banner({
     tag: '신상품 입고', title1: '알루미늄 · 투명 약포지', title2: '신상 입고', sub: '치과 처방 포장 전문, 소량도 OK', cta: '상품 보러가기 →', ctaColor: '#0f766e',
