@@ -46,7 +46,7 @@ function renderChrome() {
   const s = S.shop.settings, u = S.user;
   $('#topbar').innerHTML = `<div class="wrap"><span>${s.notice ? `📢 ${esc(s.notice)}` : ''}</span><span>${u
     ? `<b>${esc(u.name)}</b>님 (${u.points.toLocaleString()}P) <a href="#/my">마이페이지</a><a href="#" onclick="logout();return false">로그아웃</a>`
-    : `<a href="#/login">로그인</a><a href="#/signup">회원가입</a><a href="#/lookup">비회원 주문조회</a>`}<a href="/admin/">관리자</a></span></div>`;
+    : `<a href="#/login">로그인</a><a href="#/signup">회원가입</a><a href="#/lookup">비회원 주문조회</a>`}<a href="/admin/">관리자</a><a class="tb-m" href="#/templates">디자인템플릿</a><a class="tb-m" href="#/board/inquiry">문의하기</a><a class="tb-m tb-cart" href="#/cart">장바구니(${cart.length})</a></span></div>`;
   const cur = location.hash.split('?')[0];
   const qs = new URLSearchParams(location.hash.split('?')[1] || ''), catQ = qs.get('cat');
   $('#header').innerHTML = `<div class="wrap hd-main"><a class="logo" href="#/">${esc(s.shopName)}<small>치과 인쇄물 전문</small></a>
@@ -67,7 +67,7 @@ function renderChrome() {
 function renderQuick() {
   $('#quick').innerHTML = `<a href="#/my"><span>👤</span>마이</a><a href="#/cart"><span>🛒</span>장바구니${cart.length ? `<i>${cart.length}</i>` : ''}</a>
   <a href="#/board/inquiry"><span>💬</span>문의</a><button onclick="scrollTo({top:0,behavior:'smooth'})"><span>⬆</span>TOP</button>`;
-  const h = document.querySelector('.hd-links a:last-child'); if (h) h.textContent = `장바구니(${cart.length})`;
+  document.querySelectorAll('.hd-links a:last-child, .tb-cart').forEach(h => { h.textContent = `장바구니(${cart.length})`; });
 }
 window.logout = async () => { try { await api('/api/auth/logout', 'POST'); } catch {} S.token = ''; S.user = null; localStorage.removeItem('token'); renderChrome(); location.hash = '#/'; };
 

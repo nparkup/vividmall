@@ -93,6 +93,8 @@ body:not(.ed-open) input:focus,body:not(.ed-open) select:focus,body:not(.ed-open
 .side a:hover{background:#fff}.side a.on,.side a.toph.on,.side a.subl.on{background:#fff;color:var(--pri);box-shadow:0 6px 16px rgba(79,70,229,.1)}
 .sortbar select{background:#fff}
 
+/* 상단 띠의 바로가기(디자인템플릿/문의하기/장바구니)는 모바일에서만 표시 */
+#topbar .tb-m{display:none}
 /* ---------- 모바일 / 태블릿 ---------- */
 @media (max-width:900px){
   /* 헤더: 로고 → 검색 → 바로가기 → 메뉴(가로 스크롤) 순서로 쌓고, 겹침 방지 */
@@ -101,8 +103,14 @@ body:not(.ed-open) input:focus,body:not(.ed-open) select:focus,body:not(.ed-open
   .logo{font-size:24px}
   .search{display:flex;order:3;flex:1 1 100%;max-width:none}
   .search input{min-width:0;flex:1}
-  .hd-links{margin-left:auto;gap:2px;flex-wrap:nowrap;white-space:nowrap}
-  .hd-links a{padding:7px 10px;font-size:13px}
+  .hd-links{display:none}   /* 모바일에서는 상단 띠로 이동 */
+  #topbar .tb-m{display:inline;order:-1}   /* 바로가기를 맨 앞에 */
+  #topbar .tb-cart{order:-1}
+  #topbar .wrap{flex-direction:row!important;flex-wrap:nowrap!important;overflow-x:auto;white-space:nowrap;gap:0!important;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  #topbar .wrap::-webkit-scrollbar{display:none}
+  #topbar .wrap>span:last-child{white-space:nowrap!important;display:flex;align-items:center}
+  #topbar a{margin:0 16px 0 0;padding:9px 0}
+  #topbar .tb-cart{color:#fff;font-weight:600}
   .gnb .wrap{overflow-x:auto;flex-wrap:nowrap;gap:6px;padding:4px 16px 12px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
   .gnb .wrap::-webkit-scrollbar{display:none}
   .gnb .gi{flex:0 0 auto}
