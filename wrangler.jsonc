@@ -1,0 +1,17 @@
+{
+  "name": "vividmall",
+  "main": "worker/index.js",
+  "compatibility_date": "2025-09-01",
+  "compatibility_flags": ["nodejs_compat"],
+  // 화면(HTML/CSS/JS/이미지)은 그대로 서비스하고, API와 업로드 경로만 Worker가 먼저 처리
+  "assets": {
+    "directory": "./public",
+    "run_worker_first": ["/api/*", "/uploads/*", "/img/uploads/*"]
+  },
+  // 회원/주문/상품 데이터 (SQLite 기반 Durable Object)
+  "durable_objects": { "bindings": [{ "name": "SHOP", "class_name": "Shop" }] },
+  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["Shop"] }],
+  // 업로드 파일 보관 (미리 만들어야 함: npx wrangler r2 bucket create vividmall-files)
+  "r2_buckets": [{ "binding": "FILES", "bucket_name": "vividmall-files" }]
+  // 관리자 비밀번호: 코드에 넣지 말고 비밀값으로 등록 → npx wrangler secret put ADMIN_PW
+}

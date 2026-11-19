@@ -8,3 +8,6 @@ public/img/uploads/*
 *.log
 .env
 .claude/
+.dev.vars
+.wrangler/
+node_modules/
