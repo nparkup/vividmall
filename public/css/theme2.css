@@ -136,6 +136,7 @@ body:not(.ed-open) input:focus,body:not(.ed-open) select:focus,body:not(.ed-open
   .gnb .wrap{overflow-x:auto;flex-wrap:nowrap;gap:6px;padding:4px 16px 12px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
   .gnb .wrap::-webkit-scrollbar{display:none}
   .gnb .gi{flex:0 0 auto}
+  .gnb .gi-tpl{display:none}   /* 모바일에서는 템플릿 메뉴 숨김 */
   .gnb a,.gnb .gi>a{white-space:nowrap;padding:8px 15px;font-size:13.5px;margin-right:0!important;margin-left:0!important}
   .gnb .gi>a.bg-tool{margin-left:0}
   .hero{height:260px;border-radius:30px}
